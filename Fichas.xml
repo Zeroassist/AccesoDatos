@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fichas>
+    <ficha>
+        <ID>4</ID>
+        <dmg>20</dmg>
+        <owner>true</owner>
+        <pos>C 1</pos>
+        <vidaActual>130</vidaActual>
+        <vidaMax>130</vidaMax>
+        <tipo>Alfil</tipo>
+    </ficha>
+    <ficha>
+        <ID>3</ID>
+        <dmg>20</dmg>
+        <owner>true</owner>
+        <usado>false</usado>
+        <pos>C 1</pos>
+        <vidaActual>130</vidaActual>
+        <vidaMax>130</vidaMax>
+        <tipo>Rey</tipo>
+    </ficha>
+    <ficha>
+        <ID>4</ID>
+        <dmg>20</dmg>
+        <owner>true</owner>
+        <usado>false</usado>
+        <pos>C 1</pos>
+        <vidaActual>130</vidaActual>
+        <vidaMax>130</vidaMax>
+        <tipo>Rey</tipo>
+    </ficha>
+    <ficha>
+        <ID>5</ID>
+        <dmg>30</dmg>
+        <owner>true</owner>
+        <pos>A 1</pos>
+        <vidaActual>170</vidaActual>
+        <vidaMax>180</vidaMax>
+        <tipo>Torre</tipo>
+    </ficha>
+    <ficha>
+        <ID>6</ID>
+        <dmg>40</dmg>
+        <owner>true</owner>
+        <pos>D 2</pos>
+        <vidaActual>200</vidaActual>
+        <vidaMax>200</vidaMax>
+        <tipo>Dama</tipo>
+    </ficha>
+    <ficha>
+        <ID>8</ID>
+        <dmg>10</dmg>
+        <owner>false</owner>
+        <pos>A 7</pos>
+        <vidaActual>100</vidaActual>
+        <vidaMax>100</vidaMax>
+        <tipo>Peon</tipo>
+    </ficha>
+    <ficha>
+        <ID>9</ID>
+        <dmg>25</dmg>
+        <owner>false</owner>
+        <pos>B 8</pos>
+        <vidaActual>140</vidaActual>
+        <vidaMax>150</vidaMax>
+        <tipo>Caballo</tipo>
+    </ficha>
+    <ficha>
+        <ID>11</ID>
+        <dmg>30</dmg>
+        <owner>false</owner>
+        <pos>A 8</pos>
+        <vidaActual>180</vidaActual>
+        <vidaMax>180</vidaMax>
+        <tipo>Torre</tipo>
+    </ficha>
+    <ficha>
+        <ID>12</ID>
+        <dmg>40</dmg>
+        <owner>false</owner>
+        <pos>D 8</pos>
+        <vidaActual>195</vidaActual>
+        <vidaMax>200</vidaMax>
+        <tipo>Dama</tipo>
+    </ficha>
+    <ficha>
+        <ID>10</ID>
+        <dmg>1</dmg>
+        <owner>false</owner>
+        <pos>C 8</pos>
+        <vidaActual>120</vidaActual>
+        <vidaMax>130</vidaMax>
+        <tipo>Alfil</tipo>
+    </ficha>
+</fichas>

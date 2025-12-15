@@ -1,0 +1,94 @@
+[
+    {
+        "id": 9,
+        "Daño": 10,
+        "Owner": true,
+        "Posicion": "A 1",
+        "Vida": 60,
+        "VidaMax": 100,
+        "Tipo": "Caballo"
+    },
+    {
+        "id": 10,
+        "Daño": 15,
+        "Owner": false,
+        "Posicion": "A 2",
+        "Vida": 80,
+        "VidaMax": 100,
+        "Tipo": "Alfil"
+    },
+    {
+        "id": 11,
+        "Daño": 20,
+        "Owner": true,
+        "Posicion": "A 3",
+        "Vida": 60,
+        "VidaMax": 100,
+        "Tipo": "Rey",
+        "Usado": false
+    },
+    {
+        "id": 12,
+        "Daño": 25,
+        "Owner": true,
+        "Posicion": "A 4",
+        "Vida": 80,
+        "VidaMax": 100,
+        "Tipo": "Peon"
+    },
+    {
+        "id": 1,
+        "Daño": 15,
+        "Owner": true,
+        "Posicion": "A 2",
+        "Vida": 90,
+        "VidaMax": 100,
+        "Tipo": "Peon"
+    },
+    {
+        "id": 2,
+        "Daño": 25,
+        "Owner": false,
+        "Posicion": "B 1",
+        "Vida": 100,
+        "VidaMax": 100,
+        "Tipo": "Torre"
+    },
+    {
+        "id": 3,
+        "Daño": 20,
+        "Owner": true,
+        "Posicion": "C 1",
+        "Vida": 85,
+        "VidaMax": 100,
+        "Tipo": "Caballo"
+    },
+    {
+        "id": 4,
+        "Daño": 18,
+        "Owner": false,
+        "Posicion": "D 1",
+        "Vida": 95,
+        "VidaMax": 100,
+        "Tipo": "Alfil"
+    },
+    {
+        "id": 5,
+        "Daño": 35,
+        "Owner": true,
+        "Posicion": "E 1",
+        "Vida": 100,
+        "VidaMax": 100,
+        "Tipo": "Dama"
+    },
+    {
+        "id": 6,
+        "Daño": 30,
+        "Owner": false,
+        "Posicion": "F 1",
+        "Vida": 100,
+        "VidaMax": 100,
+        "Tipo": "Rey",
+        "Usado": true
+    }
+]
