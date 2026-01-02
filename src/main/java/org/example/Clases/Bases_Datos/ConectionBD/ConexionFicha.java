@@ -1,4 +1,4 @@
-package org.example.Clases.Bases_Datos;
+package org.example.Clases.Bases_Datos.ConectionBD;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

@@ -1,18 +1,17 @@
 package org.example.Clases.Bases_Datos;
 
+import org.example.Clases.Bases_Datos.ConectionBD.ConexionFicha;
 import org.example.Clases.Excepciones.ArgumentoInvalidoException;
 import org.example.Clases.Excepciones.DataAccessException;
 import org.example.Clases.InterfazDAO;
 import org.example.Piezas.Ficha;
-import org.example.Piezas.Rey;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
 public class BDFicha implements InterfazDAO {
 
-    static ConexionFicha con=new ConexionFicha();
+     ConexionFicha con=new ConexionFicha();
 
     @Override
     public List<Ficha> equipodelRey(String name) throws DataAccessException {

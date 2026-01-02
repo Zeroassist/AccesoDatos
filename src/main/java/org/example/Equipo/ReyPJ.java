@@ -9,6 +9,7 @@ import java.util.List;
 public class ReyPJ {
     private List<Ficha> subditos;
     private int tamaño_max=16;
+    private int pts;
     public ReyPJ(int id) throws IllegalAccessException {
         switch(id){
             case 1://Rey básico, tiene un escudo que se recarga si descansas en hogeras
