@@ -14,6 +14,11 @@ public class BDFicha implements InterfazDAO {
      ConexionFicha con=new ConexionFicha();
 
     @Override
+    public String records() throws DataAccessException {
+        return "";
+    }
+
+    @Override
     public List<Ficha> equipodelRey(String name) throws DataAccessException {
         return List.of();
     }
