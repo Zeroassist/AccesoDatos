@@ -15,12 +15,21 @@ import java.util.List;
 
 public interface InterfazDAO {
     /**
+     * Imprime la lista de los records que saca del almacen
+     *
+     * @return un mensaje con el top 3 de la base de datos
+     *
+     * @throws DataAccessException si no se puede acceder al almacen o no existe
+     */
+    public String records() throws DataAccessException;
+    //Creado nuevo para la tabla de puntuaciones
+    /**
      * Busca en el almacen el ReyPJ con el nombre que se le pasa y te devuelve su lista de piezas
      *
      * @return Lista del equipo del rey en funcion de su nombre
      *
      * @throws DataAccessException si no se puede acceder al almacen o no existe
-     * @throws IncompatibleVersionException  si el almacen coniene algo que no sea de la clase Rey
+     * @throws IncompatibleVersionException  si el almacen coniene algo que no sea de la clase ReyPJ
      */
     public List<Ficha> equipodelRey(String name) throws DataAccessException;
     //Remplaza al listar reyes usados

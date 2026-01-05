@@ -1,6 +1,5 @@
 package org.example.Equipo;
 
-import org.example.Clases.Excepciones.DataAccessException;
 import org.example.Piezas.*;
 
 import java.util.ArrayList;
