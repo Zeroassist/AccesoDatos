@@ -12,7 +12,7 @@ public class ConexionFicha{
      * Esta es una clase de la que las clases que necesiten conexion con la base de datos
      *
      */
-    private String url="jdbc:postgresql://localhost:5432/aprendizaje";
+    private String url="jdbc:postgresql://localhost:5432/aprendizaje?currentSchema=roguechess";
     private String user="postgres";
     private String password="alumno";
 

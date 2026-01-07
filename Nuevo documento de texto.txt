@@ -6,15 +6,27 @@ CREATE TABLE IF NOT EXISTS ficha (
     nombre VARCHAR(10)  PRIMARY KEY,
     dmg INTEGER NOT NULL CHECK (dmg >= 0),
     vidamax INTEGER NOT NULL CHECK (vidamax > 0)
-
-
 );
 
 
 CREATE TABLE roguechess.puntuacion_equipo (
     nombre_jugador VARCHAR(50) PRIMARY KEY,
-
     equipo VARCHAR(50) NOT NULL,
     puntos INTEGER NOT NULL CHECK (puntos >= 0),
     fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
+INSERT INTO roguechess.ficha (nombre, dmg, vidamax)
+VALUES ('Dama', 20, 60);
+INSERT INTO roguechess.ficha (nombre, dmg, vidamax)
+VALUES
+    ('Torre', 10, 60);
+INSERT INTO roguechess.ficha (nombre, dmg, vidamax)
+VALUES
+    ('Alfil', 10, 40);
+INSERT INTO roguechess.ficha (nombre, dmg, vidamax)
+VALUES
+    ('Caballo', 15, 60);
+INSERT INTO roguechess.ficha (nombre, dmg, vidamax)
+VALUES
+    ('Peon', 25, 50);
+select * from roguechess.ficha

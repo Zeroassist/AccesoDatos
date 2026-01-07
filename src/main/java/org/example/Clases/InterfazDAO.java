@@ -4,10 +4,7 @@ import org.example.Clases.Excepciones.ArgumentoInvalidoException;
 import org.example.Clases.Excepciones.DataAccessException;
 import org.example.Clases.Excepciones.IncompatibleVersionException;
 import org.example.Piezas.Ficha;
-import org.example.Piezas.Rey;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -29,41 +26,36 @@ public interface InterfazDAO {
      * @return Lista del equipo del rey en funcion de su nombre
      *
      * @throws DataAccessException si no se puede acceder al almacen o no existe
-     * @throws IncompatibleVersionException  si el almacen coniene algo que no sea de la clase ReyPJ
+     * @throws IncompatibleVersionException  si el almacen coniene alguna ficha que no se encuentre
      */
     public List<Ficha> equipodelRey(String name) throws DataAccessException;
     //Remplaza al listar reyes usados
     /**
-     * Ordena la lista de tus fichas actuales en funcion del atributo que le mandes
+     * Ordena las fichas en funcion del atributo que le mandes(daño o vida)
      *
-     * @param atributo el atributo por el que quieres que ordene
+     * @param atributo el atributo por el que quieres que ordene(daño o vida)
      *
-     * @return Lista ordenada por el atributo que le hayas pasado
+     * @return Lista ordenada por el atributo que le hayas pasado(daño o vida)
      *
      * @throws DataAccessException si no encuentra el almacen
      * @throws ArgumentoInvalidoException si el atributo introducido no existe
      */
     public List<Ficha> ordenarFichasxAtributos(String atributo) throws DataAccessException, ArgumentoInvalidoException;
-    //Para hacerlo mas generico, hemos quitado el archivo de guardado y hemos decidido poner nuestras
-    // excepciones personalizadas
-
     /**
      * CRUD normal y corriente
      */
 
     /**
-     * Metodo para buscar una ficha en el almacen segun su id
+     * Metodo para buscar una ficha en el almacen segun su nomrbe(Primary key que es el tipo de ficha)
      *
-     * @param id el ID de la ficha a buscar
+     * @param nombre el tipo de la ficha a buscar(Peon, Caballo, Alfil...)
      *
      * @return Un objeto ficha que se haya buscado
      *
      * @throws DataAccessException si no se puede acceder al almacen o no existe
      * @throws IncompatibleVersionException  si el almacen coniene algo que no sea de la clase Ficha
      */
-    public Ficha leer(int id)throws DataAccessException;
-    //Para hacerlo mas generico, hemos quitado el archivo de guardado y hemos decidido poner nuestras
-    // excepciones personalizadas
+    public Ficha leer(String nombre)throws DataAccessException;
     /**
      * Metodo que lee el almacen de datos y devuelve una lista con todas las fichas que lee
      *
@@ -73,8 +65,6 @@ public interface InterfazDAO {
      * @throws IncompatibleVersionException  si el almacen coniene algo que no sea de la clase Ficha
      */
     public List<Ficha> leerLista()throws DataAccessException;
-    //Para hacerlo mas generico, hemos quitado el archivo de guardado y hemos decidido poner nuestras
-    // excepciones personalizadas
     /**
      * Metodo para escribir una ficha en el almacen
      *
@@ -82,37 +72,31 @@ public interface InterfazDAO {
      * @throws java.io.IOException si sucede algun error en la escritura
      */
     public void escribir(Ficha f) throws DataAccessException,IOException;
-    //Para hacerlo mas generico, hemos quitado el archivo de guardado y hemos decidido poner nuestras
-    // excepciones personalizadas
     /**
-     * Metodo para escribir una lista de piezas en el almacen
+     * Metodo para escribir una lista de fichas en el almacen
      *
-     * @param piezas
+     * @param fichas
      *
      * @throws DataAccessException si no se puede acceder al almacen o no existe
      * @throws java.io.IOException si sucede algun error en la escritura
      */
-    public void escribirLista(List<Ficha> piezas) throws DataAccessException, IOException;
-    //Para hacerlo mas generico, hemos quitado el archivo de guardado y hemos decidido poner nuestras
-    // excepciones personalizadas
+    public void escribirLista(List<Ficha> fichas) throws DataAccessException, IOException;
     /**
-     * Metodo para actualizar cualquier cosa dentro del almacen
+     * Metodo para actualizar dentro del almacen
      *
-     * @param f Una o mas ficha a modificar en el almacen
+     * @param jr Nombre del record a modificar en el almacen
+     * @param f Lista de fichas que se han usado en la run
+     * @param pts puntos conseguidos en la run
      *
      * @throws DataAccessException si no se puede acceder al almacen o no existe
      */
-    public void actualizar(List<Ficha> f) throws DataAccessException;
-    //Para hacerlo mas generico, hemos quitado el archivo de guardado y hemos decidido poner nuestras
-    // excepciones personalizadas
+    public void actualizar(String jr, List<Ficha> f, int pts) throws DataAccessException;
     /**
-     * Metodo para eliminar fichas del archivo
+     * Metodo que borra el record de un jugador
      *
-     * @param fic Objeto ficha a eliminar del almacen
+     * @param nombreJugador Jugador que se va a borrar del almacen
      *
      * @throws DataAccessException si no se puede acceder al almacen o no existe
      */
-    public void eliminar(Ficha fic) throws DataAccessException;
-    //Para hacerlo mas generico, hemos quitado el archivo de guardado y hemos decidido poner nuestras
-    // excepciones personalizadas
+    public void eliminar(String nombreJugador) throws DataAccessException;
 }
