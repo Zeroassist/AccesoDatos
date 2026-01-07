@@ -3,6 +3,7 @@ package org.example.Clases;
 import org.example.Clases.Excepciones.ArgumentoInvalidoException;
 import org.example.Clases.Excepciones.DataAccessException;
 import org.example.Clases.Excepciones.IncompatibleVersionException;
+import org.example.Equipo.RecordJugador;
 import org.example.Piezas.Ficha;
 
 import java.io.IOException;
@@ -14,11 +15,11 @@ public interface InterfazDAO {
     /**
      * Imprime la lista de los records que saca del almacen
      *
-     * @return un mensaje con el top 3 de la base de datos
+     * @return una lista de la clase "Record" con el top 3 de la base de datos
      *
      * @throws DataAccessException si no se puede acceder al almacen o no existe
      */
-    public String records() throws DataAccessException;
+    public List<RecordJugador> records() throws DataAccessException;
     //Creado nuevo para la tabla de puntuaciones
     /**
      * Ordena las fichas en funcion del atributo que le mandes(daño o vida)
@@ -64,7 +65,7 @@ public interface InterfazDAO {
      * @throws DataAccessException si no se puede acceder al almacen o no existe
      * @throws java.io.IOException si sucede algun error en la escritura
      */
-    public void escribir(String name, List<Ficha> f) throws DataAccessException, IOException;
+    public void escribir(String name, List<Ficha> f) throws DataAccessException, IOException, ArgumentoInvalidoException;
     /**
      * Metodo para escribir una lista de records en el almacen
      *
@@ -83,8 +84,9 @@ public interface InterfazDAO {
      * @param pts puntos conseguidos en la run
      *
      * @throws DataAccessException si no se puede acceder al almacen o no existe
+     * @throwa ArgumentoInvalidoException si no existe un jugador o ya tiene mejor puntuacion que la nueva
      */
-    public void actualizar(String jr, List<Ficha> f, int pts) throws DataAccessException;
+    public void actualizar(String jr, List<Ficha> f, int pts) throws DataAccessException, ArgumentoInvalidoException;
     /**
      * Metodo que borra el record de un jugador
      *

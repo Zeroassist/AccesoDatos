@@ -3,6 +3,7 @@ package org.example.Clases.Bases_Datos;
 import org.example.Clases.Bases_Datos.ConectionBD.ConexionFicha;
 import org.example.Clases.Excepciones.*;
 import org.example.Clases.InterfazDAO;
+import org.example.Equipo.RecordJugador;
 import org.example.Piezas.*;
 import org.postgresql.util.PSQLException;
 
@@ -28,8 +29,31 @@ public class BDFicha implements InterfazDAO {
 
 
     @Override
-    public String records() throws DataAccessException {
-        return "";
+    public List<RecordJugador> records() throws DataAccessException {
+        String sql = """
+        SELECT *
+        FROM roguechess.puntuacion_equipo
+        """;
+        List<RecordJugador> devuelta = new ArrayList<>();
+        try (
+                PreparedStatement ps = con.prepareStatement(sql);
+        ) {
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    String nombre= rs.getString("nombre_jugador");
+                    String equipo = rs.getString("equipo");
+                    int pts = rs.getInt("puntos");
+                    String fecha = rs.getString("fecha");
+
+                    RecordJugador temp = new RecordJugador(nombre, equipo, pts,fecha);
+                    devuelta.add(temp);
+                }
+                devuelta.sort(Comparator.comparingInt(RecordJugador::getPuntos));
+               return devuelta.subList(0, Math.min(3, devuelta.size()));
+            }
+        } catch (SQLException e) {
+            throw new DataAccessException("No se pudo leer la tabla de records \n"+e);
+        }
     }
 
     @Override
@@ -169,7 +193,7 @@ public class BDFicha implements InterfazDAO {
     }
 
     @Override
-    public void escribir(String name, List<Ficha> f) throws DataAccessException, IOException {
+    public void escribir(String name, List<Ficha> f) throws DataAccessException, IOException, ArgumentoInvalidoException {
         String sql = """
         INSERT INTO roguechess.puntuacion_equipo (nombre_jugador,equipo,puntos,fecha) VALUES (?, ?, ?, CURRENT_TIMESTAMP);
                 """;
@@ -194,8 +218,7 @@ public class BDFicha implements InterfazDAO {
             }
         }catch(PSQLException e) {
                 System.out.println("================================================");
-                System.out.println("     Quiere usted axtualizar su record ?");
-                System.out.println("1) si 0) no");
+                System.out.println("Pulse 1 si quiere actualizar su record ");
                 int op;
                         try{
                             op=sc.nextInt();
@@ -221,14 +244,47 @@ public class BDFicha implements InterfazDAO {
         }
         int cont=0;
         for(List<Ficha> lista : fichas){
-            escribir(names.get(cont),lista);
+            try {
+                escribir(names.get(cont),lista);
+            } catch (ArgumentoInvalidoException e) {
+                System.out.print("no se ha podido actualizar el jugador");
+            }
             cont++;
         }
     }
 
     @Override
-    public void actualizar(String jr, List<Ficha> f, int pts) throws DataAccessException {
+    public void actualizar(String jr, List<Ficha> f, int pts) throws DataAccessException, ArgumentoInvalidoException {
 
+        String sql = """
+                UPDATE roguechess.puntuacion_equipo
+                SET equipo = ?
+                    puntos = ?,
+                    fecha = CURRENT_TIMESTAMP
+                WHERE nombre_jugador = ? AND puntos >= ?;
+                """;
+        try(
+                PreparedStatement pst = con.prepareStatement(sql)
+            ){
+
+            String equipo = "";
+            for(Ficha ficha : f){
+                equipo=equipo+ficha.getType()+",";
+            }
+            pst.setString(1,equipo);
+            pst.setInt(2,pts);
+            pst.setString(3,jr);
+            pst.setInt(4,pts);
+            int filasAfectadas = pst.executeUpdate();
+            if(filasAfectadas==0){
+                throw new ArgumentoInvalidoException("No se ha podido encontrar el jugador: "+jr+" con menos puntos que "+pts);
+            }else{
+                System.out.println("Todo ok Con actualizar");
+            }
+
+        }catch(SQLException e){
+            throw new DataAccessException("Error al leer la tabla de records \n "+e);
+        }
     }
 
     @Override
