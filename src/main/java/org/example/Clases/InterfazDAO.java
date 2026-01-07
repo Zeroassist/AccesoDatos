@@ -21,16 +21,6 @@ public interface InterfazDAO {
     public String records() throws DataAccessException;
     //Creado nuevo para la tabla de puntuaciones
     /**
-     * Busca en el almacen el ReyPJ con el nombre que se le pasa y te devuelve su lista de piezas
-     *
-     * @return Lista del equipo del rey en funcion de su nombre
-     *
-     * @throws DataAccessException si no se puede acceder al almacen o no existe
-     * @throws IncompatibleVersionException  si el almacen coniene alguna ficha que no se encuentre
-     */
-    public List<Ficha> equipodelRey(String name) throws DataAccessException;
-    //Remplaza al listar reyes usados
-    /**
      * Ordena las fichas en funcion del atributo que le mandes(daño o vida)
      *
      * @param atributo el atributo por el que quieres que ordene(daño o vida)
@@ -66,21 +56,25 @@ public interface InterfazDAO {
      */
     public List<Ficha> leerLista()throws DataAccessException;
     /**
-     * Metodo para escribir una ficha en el almacen
+     * Metodo para escribir un record en el almacen
+     *
+     * @param f lista de fichas del equipo del jugador
+     * @param name nombre del jugador
      *
      * @throws DataAccessException si no se puede acceder al almacen o no existe
      * @throws java.io.IOException si sucede algun error en la escritura
      */
-    public void escribir(Ficha f) throws DataAccessException,IOException;
+    public void escribir(String name, List<Ficha> f) throws DataAccessException, IOException;
     /**
-     * Metodo para escribir una lista de fichas en el almacen
+     * Metodo para escribir una lista de records en el almacen
      *
-     * @param fichas
+     * @param equipos lista de equipos que tienen los distintos jugadores
+     * @param names lista de nombres de los jugadores
      *
      * @throws DataAccessException si no se puede acceder al almacen o no existe
      * @throws java.io.IOException si sucede algun error en la escritura
      */
-    public void escribirLista(List<Ficha> fichas) throws DataAccessException, IOException;
+    public void escribirLista(List<String> names, List<List<Ficha>> equipos) throws DataAccessException, IOException;
     /**
      * Metodo para actualizar dentro del almacen
      *

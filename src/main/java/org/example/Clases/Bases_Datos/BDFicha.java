@@ -1,23 +1,22 @@
 package org.example.Clases.Bases_Datos;
 
 import org.example.Clases.Bases_Datos.ConectionBD.ConexionFicha;
-import org.example.Clases.Excepciones.ArgumentoInvalidoException;
-import org.example.Clases.Excepciones.DataAccessException;
-import org.example.Clases.Excepciones.IncompatibleVersionException;
+import org.example.Clases.Excepciones.*;
 import org.example.Clases.InterfazDAO;
 import org.example.Piezas.*;
+import org.postgresql.util.PSQLException;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class BDFicha implements InterfazDAO {
 
-     Connection con;
+    static Scanner sc =new Scanner(System.in);
+    Connection con;
 
     {
         try {
@@ -34,13 +33,20 @@ public class BDFicha implements InterfazDAO {
     }
 
     @Override
-    public List<Ficha> equipodelRey(String name) throws DataAccessException {
-        return List.of();
-    }
-
-    @Override
     public List<Ficha> ordenarFichasxAtributos(String atributo) throws DataAccessException, ArgumentoInvalidoException {
-        return List.of();
+        atributo=atributo.toLowerCase().trim();
+        List<Ficha>organi=leerLista();
+        switch(atributo){
+            case "vida":
+                organi.sort(Comparator.comparingInt(Ficha::getVidamax));
+                break;
+            case "daño":
+                organi.sort(Comparator.comparingInt(Ficha::getDmg));
+                break;
+            case "tipo":
+                organi.sort(Comparator.comparing(Ficha::getType));
+        }
+        return organi;
     }
 
     @Override
@@ -163,13 +169,61 @@ public class BDFicha implements InterfazDAO {
     }
 
     @Override
-    public void escribir(Ficha f) throws DataAccessException, IOException {
+    public void escribir(String name, List<Ficha> f) throws DataAccessException, IOException {
+        String sql = """
+        INSERT INTO roguechess.puntuacion_equipo (nombre_jugador,equipo,puntos,fecha) VALUES (?, ?, ?, CURRENT_TIMESTAMP);
+                """;
 
+        String equipo = "";
+        try (
+                PreparedStatement prep= con.prepareStatement(sql)
+                ){
+            equipo = "";
+            for (Ficha ficha : f) {
+                equipo=equipo+ficha.getType()+",";
+            }
+            int pts = (int)((Math.random()*1000+1));
+            prep.setString(1,name);
+            prep.setString(2,equipo);
+            prep.setInt(3,pts);
+            int filasAfectadas = prep.executeUpdate();
+            if(filasAfectadas!=1){
+                throw new DataAccessException(
+                        "No se pudo escribir la ficha \n "+f
+                );
+            }
+        }catch(PSQLException e) {
+                System.out.println("================================================");
+                System.out.println("     Quiere usted axtualizar su record ?");
+                System.out.println("1) si 0) no");
+                int op;
+                        try{
+                            op=sc.nextInt();
+                        }catch (InputMismatchException ex){
+                            op=0;
+                        }
+                if(op!=1&&op!=0){
+                    System.out.println("no ha seleccionado ninguno de los dos");
+                }else{
+                    if(op==1){
+                        actualizar(name,f, 1000);
+                    }
+                }
+        } catch (SQLException e) {
+            throw new DataAccessException("Error al leer la ficha \n " + e);
+        }
     }
 
     @Override
-    public void escribirLista(List<Ficha> fichas) throws DataAccessException, IOException {
-
+    public void escribirLista(List<String> names, List<List<Ficha>> fichas) throws DataAccessException, IOException {
+        if(names.size()!=fichas.size()) {
+            throw new DistintaLongitudException("Las listas deben ser de la misma longitud");
+        }
+        int cont=0;
+        for(List<Ficha> lista : fichas){
+            escribir(names.get(cont),lista);
+            cont++;
+        }
     }
 
     @Override

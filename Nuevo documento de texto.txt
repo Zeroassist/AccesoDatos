@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS ficha (
 
 CREATE TABLE roguechess.puntuacion_equipo (
     nombre_jugador VARCHAR(50) PRIMARY KEY,
-    equipo VARCHAR(50) NOT NULL,
+    equipo VARCHAR(200) NOT NULL,
     puntos INTEGER NOT NULL CHECK (puntos >= 0),
     fecha TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
@@ -29,4 +29,11 @@ VALUES
 INSERT INTO roguechess.ficha (nombre, dmg, vidamax)
 VALUES
     ('Peon', 25, 50);
-select * from roguechess.ficha
+INSERT INTO roguechess.puntuacion_equipo (nombre_jugador,equipo,puntos,fecha) VALUES (
+'Francisco',
+'Peon,Peon,Peon,Peon,Peon,Peon,Peon,Peon,Caballo,Caballo,Alfil,Alfil,Torre,Torre,Dama',
+300,
+CURRENT_TIMESTAMP
+         );
+select * from roguechess.ficha;
+select * from roguechess.puntuacion_equipo;

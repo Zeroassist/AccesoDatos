@@ -154,6 +154,7 @@ public abstract class Ficha {
                 break;
             case "Vampiro":
                 this.type=tipo.Vampiro;
+                break;
             default:
                 throw new IllegalArgumentException();
         }
