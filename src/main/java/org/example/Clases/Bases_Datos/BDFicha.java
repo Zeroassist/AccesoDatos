@@ -48,7 +48,7 @@ public class BDFicha implements InterfazDAO {
                     RecordJugador temp = new RecordJugador(nombre, equipo, pts,fecha);
                     devuelta.add(temp);
                 }
-                devuelta.sort(Comparator.comparingInt(RecordJugador::getPuntos));
+                devuelta.sort(Comparator.comparingInt(RecordJugador::getPuntos).reversed());
                return devuelta.subList(0, Math.min(3, devuelta.size()));
             }
         } catch (SQLException e) {
@@ -247,45 +247,53 @@ public class BDFicha implements InterfazDAO {
             try {
                 escribir(names.get(cont),lista);
             } catch (ArgumentoInvalidoException e) {
-                System.out.print("no se ha podido actualizar el jugador");
+                System.out.println("no se ha podido actualizar el jugador");
             }
             cont++;
         }
     }
 
     @Override
-    public void actualizar(String jr, List<Ficha> f, int pts) throws DataAccessException, ArgumentoInvalidoException {
+    public void actualizar(String jr, List<Ficha> f, int pts)
+            throws DataAccessException, ArgumentoInvalidoException {
 
         String sql = """
-                UPDATE roguechess.puntuacion_equipo
-                SET equipo = ?
-                    puntos = ?,
-                    fecha = CURRENT_TIMESTAMP
-                WHERE nombre_jugador = ? AND puntos >= ?;
-                """;
-        try(
-                PreparedStatement pst = con.prepareStatement(sql)
-            ){
+        UPDATE roguechess.puntuacion_equipo
+        SET equipo = ?,
+            puntos = ?,
+            fecha = CURRENT_TIMESTAMP
+        WHERE nombre_jugador = ? AND puntos < ?;
+        """;
 
-            String equipo = "";
-            for(Ficha ficha : f){
-                equipo=equipo+ficha.getType()+",";
+        try (PreparedStatement pst = con.prepareStatement(sql)) {
+
+            StringBuilder equipo = new StringBuilder();
+            for (Ficha ficha : f) {
+                equipo.append(ficha.getType()).append(",");
             }
-            pst.setString(1,equipo);
-            pst.setInt(2,pts);
-            pst.setString(3,jr);
-            pst.setInt(4,pts);
+
+            pst.setString(1, equipo.toString());
+            pst.setInt(2, pts);
+            pst.setString(3, jr);
+            pst.setInt(4, pts);
+
             int filasAfectadas = pst.executeUpdate();
-            if(filasAfectadas==0){
-                throw new ArgumentoInvalidoException("No se ha podido encontrar el jugador: "+jr+" con menos puntos que "+pts);
-            }else{
-                System.out.println("Todo ok Con actualizar");
+
+            if (filasAfectadas == 0) {
+                throw new ArgumentoInvalidoException(
+                        "No se actualizó el récord (no existe o ya tiene más puntos)"
+                );
             }
 
-        }catch(SQLException e){
-            throw new DataAccessException("Error al leer la tabla de records \n "+e);
+            System.out.println("Récord actualizado correctamente");
+
+        } catch (SQLException e) {
+            throw new DataAccessException(
+                    "Error al actualizar la tabla de records\n" + e
+            );
         }
     }
+
 
     @Override
     public void eliminar(String nombreJugador) throws DataAccessException {
